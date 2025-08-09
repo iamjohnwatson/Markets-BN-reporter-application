@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akash Sriram - Technology Reporter | Reuters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0F1419;
+            --bg-secondary: #1A1F2E;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-bg-strong: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0BEC5;
+            --accent-blue: #00D4FF;
+            --accent-green: #00FF88;
+            --accent-red: #FF4757;
+            --accent-purple: #8B5CF6;
+            --accent-orange: #FF9F43;
+            --grid-color: rgba(0, 212, 255, 0.08);
+            --terminal-green: #00FF41;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 18px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Minimal Terminal Background */
+        .financial-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                /* Subtle terminal grid */
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+                /* Gentle gradient overlay */
+                radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.03) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 70%),
+                var(--bg-primary);
+            background-size: 
+                50px 50px,
+                50px 50px,
+                100% 100%,
+                100% 100%,
+                100% 100%;
+            animation: subtle-pulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes subtle-pulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Clean Glass Effects */
+        .glass-effect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px var(--glass-shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-effect-strong {
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 12px 40px var(--glass-shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            border-radius: 25px;
+            padding: 12px 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav a:hover {
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(20px);
+            transform: scale(1.05);
+            color: var(--accent-blue);
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+            margin: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .hero .tagline {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--accent-blue);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Contact Links & Download Buttons */
+        .contact-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn, .download-btn {
+            border-radius: 15px;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-btn:hover, .download-btn:hover {
+            transform: scale(1.05);
+            color: var(--accent-blue);
+        }
+
+        .download-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-primary);
+        }
+
+        .content-card {
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* About Section */
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .highlight-quote {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            font-style: italic;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(20px);
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .experience-item {
+            border-radius: 20px;
+            padding: 40px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .experience-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .experience-company {
+            color: var(--accent-blue);
+            font-weight: 500;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .experience-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .skills-category {
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .skills-category h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--accent-blue);
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .skill-percentage {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            transition: width 1s ease-out;
+        }
+
+        /* Cover Letter Section */
+        .cover-letter {
+            border-radius: 25px;
+            padding: 50px;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        .cover-letter h3 {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: var(--accent-blue);
+            text-align: center;
+        }
+
+        .cover-letter p {
+            margin-bottom: 20px;
+        }
+
+        .cover-letter p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                top: 10px;
+                padding: 10px 20px;
+            }
+
+            .nav ul {
+                gap: 20px;
+            }
+
+            .hero-content {
+                padding: 40px 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .contact-links, .download-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .content-card, .cover-letter {
+                padding: 30px 25px;
+            }
+
+            .experience-item {
+                padding: 30px 25px;
+            }
+
+            .skills-category {
+                padding: 30px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav ul {
+                gap: 15px;
+            }
+
+            .nav a {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .hero-content {
+                padding: 30px 20px;
+            }
+
+            .content-card, .cover-letter {
+                padding: 25px 20px;
+            }
+
+            .experience-item, .skills-category {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Minimal Terminal Background -->
+    <div class="financial-background"></div>
+
+    <!-- Navigation -->
+    <nav class="nav glass-effect-strong">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#cover-letter">Cover Letter</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content glass-effect-strong">
+            <h1>Akash Sriram</h1>
+            <p class="subtitle">Technology Reporter | Reuters</p>
+            <p class="tagline">US tech companies reporter with a penchant for data</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card glass-effect">
+                    <span class="stat-number">430+</span>
+                    <span class="stat-label">Reuters Bylines</span>
+                </div>
+                <div class="stat-card glass-effect">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Years at Reuters</span>
+                </div>
+                <div class="stat-card glass-effect">
+                    <span class="stat-number">8,000+</span>
+                    <span class="stat-label">Stories & Buzzes</span>
+                </div>
+            </div>
+
+            <div class="contact-links">
+                <a href="mailto:akash.sriram@thomsonreuters.com" class="contact-btn glass-effect">Email</a>
+                <a href="tel:+919901777617" class="contact-btn glass-effect">Phone</a>
+                <a href="https://www.linkedin.com/in/akashsriram/" class="contact-btn glass-effect" target="_blank">LinkedIn</a>
+                <a href="https://github.com/iamjohnwatson" class="contact-btn glass-effect" target="_blank">GitHub</a>
+                <a href="https://www.reuters.com/authors/akash-sriram/" class="contact-btn glass-effect" target="_blank">Reuters Profile</a>
+            </div>
+
+            <div class="download-section">
+                <a href="Akash Sriram-markets.pdf" download class="download-btn glass-effect">📄 Download CV</a>
+                <a href="EMEA markets breaking news reporter.pdf" download class="download-btn glass-effect">📋 Download Cover Letter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="content-card glass-effect-strong">
+                <div class="about-content">
+                    <p>With 430+ bylines and four years of experience at Reuters, I specialize in covering US technology companies and equities. My reporting combines speed, accuracy, and analytical depth to deliver market-moving journalism.</p>
+                    
+                    <div class="highlight-quote">
+                        "Delivering exceptional equities coverage under the most demanding conditions, turning high-pressure moments into market-moving journalism."
+                    </div>
+                    
+                    <p>Experienced at taking the right news decisions during critical moments, I am persistent at chasing stories and seeing them through to publication. My unique skills in source-building have enabled me to consistently break market-moving stories and maintain Reuters' competitive edge in technology coverage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-item glass-effect-strong">
+                    <div class="experience-title">Sector Specialist, US Tech, Media and Telecom</div>
+                    <div class="experience-company">Reuters | 2021 - Present</div>
+                    <div class="experience-description">
+                        Lead coverage of Big Tech, EVs, and space companies. Produce data-driven enterprise stories and manage team story files while mentoring junior reporters. Led coverage on 8 out of 11 Red Alert stories from Bangalore bureau's US technology team.
+                    </div>
+                </div>
+                
+                <div class="experience-item glass-effect-strong">
+                    <div class="experience-title">Tech, Media and Telecom correspondent</div>
+                    <div class="experience-company">Reuters | 2020 - 2021</div>
+                    <div class="experience-description">
+                        Specialized in US technology and telecom companies with focus on EV and space coverage. Delivered rapid real-time reporting on earnings and market movements, consistently beating competition on breaking news.
+                    </div>
+                </div>
+                
+                <div class="experience-item glass-effect-strong">
+                    <div class="experience-title">Digital Editor & Correspondent</div>
+                    <div class="experience-company">Deccan Herald | 2018 - 2020</div>
+                    <div class="experience-description">
+                        Led digital coverage for 2020 US election, edited wire copy, and managed sub-editors. Founded the organization's podcasting division and developed multimedia storytelling capabilities.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-grid">
+                <div class="skills-category glass-effect-strong">
+                    <h3>Journalism Expertise</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Breaking News Reporting</span>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Data Journalism</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Markets Knowledge</span>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Enterprise Reporting</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skills-category glass-effect-strong">
+                    <h3>Technical Skills</h3>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Data Visualization</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Python for data analysis</span>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">LSEG Workspace and MS Excel skills</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">AI and OpenArena knowledge</span>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cover Letter Section -->
+    <section id="cover-letter">
+        <div class="container">
+            <h2 class="section-title">Cover Letter</h2>
+            <div class="cover-letter glass-effect-strong">
+                <h3>EMEA Markets Breaking News Reporter Position</h3>
+                
+                <p>Dear Amanda,</p>
+                
+                <p>Over 430+ bylines, countless breaking news records, and the most-read companies story of the month—my four years at Reuters have been defined by delivering exceptional equities coverage under the most demanding conditions. As a candidate for the EMEA markets Breaking News reporter position, I bring a proven track record of turning high-pressure moments into market-moving journalism.</p>
+
+                <p>Comprehensive coverage spans Apple, Tesla, Alphabet, OpenAI, and other market-moving companies, giving me deep insight into equity drivers and market reactions that consistently position Reuters ahead of competitors.</p>
+
+                <p>At 3 a.m. India time, while most of the world sleeps, I'm breaking news that moves global markets. Reuters has trusted me to lead night shifts regularly, where I make critical news decisions during crucial overnight hours. Leading coverage on 8 out of 11 Red Alert stories produced by the Bangalore bureau's US technology team through July demonstrates my reliability when markets demand immediate, accurate reporting.</p>
+
+                <p>My breaking news speed and accuracy define industry standards. In April, when President Trump announced new tariffs, I was the first to spot how this could affect prices of iPhones in the U.S. and I wrote a story on how analysts said tariffs could raise the prices of the Apple smartphone to up to $2,300, beating the competition by more than an hour.</p>
+
+                <p>When Tesla shares plunged, losing more than $150 billion in market value as Musk stepped up criticism of ally Trump, my coverage captured the immediate market impact and political tensions driving the record selloff. Many such stories I've reported contain engaging data visualizations that enhance readability and provide information that can often not be explained in text.</p>
+
+                <p>Last year, I reported that Lyft's stock soared as much as 67% after a mistaken profit margin statement sparked a wild ride in trading. The stock then settled at around 17% as investors focused on the company's cost cuts and positive outlook. I was the first to quickly uncover and report that the dramatic 67% move was due to a margin forecast error, beating the competition.</p>
+
+                <p>My investigative enterprise work uncovers stories that reshape market understanding. My deep dive into Trump Mobile revealed the complex web of businesses behind the venture, including how customer service calls initially connected to nondescript auto repair shop — Omega Auto Care. This story involved obtaining source-based information and connections ultimately leading to interviewing the head of the venture, a feat that hasn't been matched in at least two weeks.</p>
+
+                <p>My investigation into Uber and Lyft drivers using Tesla's Full Self-Driving software as makeshift robotaxis exposed a dangerous regulatory gray area, centered on a Las Vegas crash that highlighted passenger safety risks.</p>
+
+                <p>This experience covering the biggest companies and markets in the world has enhanced my ability to anticipate market reactions and connect real-time events with broader implications through strong sourcing networks across technology, media, and telecom sectors.</p>
+
+                <p>I am eager to bring my real-time market monitoring skills to the EMEA markets team, contributing to flagship reports that inform global finance. Thank you for considering my application.</p>
+
+                <p>Sincerely,<br><strong>Akash Sriram</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all content cards
+        document.querySelectorAll('.content-card, .experience-item, .skills-category').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate skill bars when in view
+        const skillObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skills-category').forEach(el => {
+            skillObserver.observe(el);
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.2)';
+                nav.style.backdropFilter = 'blur(35px)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.15)';
+                nav.style.backdropFilter = 'blur(30px)';
+            }
+        });
+    </script>
+</body>
+</html>
