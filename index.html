@@ -9,20 +9,19 @@
         :root {
             --bg-primary: #0F1419;
             --bg-secondary: #1A1F2E;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-bg-strong: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-strong: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.15);
             --text-primary: #FFFFFF;
             --text-secondary: #B0BEC5;
             --accent-blue: #00D4FF;
             --accent-green: #00FF88;
-            --accent-red: #FF4757;
-            --accent-purple: #8B5CF6;
-            --accent-orange: #FF9F43;
-            --grid-color: rgba(0, 212, 255, 0.08);
+            --accent-purple: #8B5CF6; /* Add this missing variable */
             --terminal-green: #00FF41;
+            --terminal-amber: #FFB000;
+            --grid-color: rgba(0, 255, 65, 0.05);
         }
+        
 
         * {
             margin: 0;
@@ -40,7 +39,7 @@
             position: relative;
         }
 
-        /* Minimal Terminal Background */
+        /* Animated financial terminal background */
         .financial-background {
             position: fixed;
             top: 0;
@@ -49,25 +48,21 @@
             height: 100%;
             z-index: -1;
             background: 
-                /* Subtle terminal grid */
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
-                /* Gentle gradient overlay */
-                radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.03) 0%, transparent 70%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 70%),
+                linear-gradient(rgba(15, 20, 25, 0.7), rgba(15, 20, 25, 0.5)),
+                url('finance_terminal_bg.png') center center / cover no-repeat,
                 var(--bg-primary);
-            background-size: 
-                50px 50px,
-                50px 50px,
-                100% 100%,
-                100% 100%,
-                100% 100%;
-            animation: subtle-pulse 8s ease-in-out infinite alternate;
+            animation: financial-breathe 15s ease-in-out infinite alternate;
         }
 
-        @keyframes subtle-pulse {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
+        @keyframes financial-breathe {
+            0% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            100% { 
+                transform: scale(1.02);
+                opacity: 1;
+            }
         }
 
         /* Clean Glass Effects */
@@ -77,7 +72,7 @@
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
             box-shadow: 
-                0 8px 32px var(--glass-shadow),
+                0 8px 32px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
@@ -87,7 +82,7 @@
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             box-shadow: 
-                0 12px 40px var(--glass-shadow),
+                0 12px 40px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
@@ -158,11 +153,12 @@
             font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 700;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: linear-gradient(135deg, var(--accent-blue), #8B5CF6, var(--terminal-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
 
         .hero .subtitle {
             font-size: clamp(1.2rem, 2.5vw, 1.5rem);
@@ -495,7 +491,7 @@
     </style>
 </head>
 <body>
-    <!-- Minimal Terminal Background -->
+    <!-- Animated Financial Terminal Background -->
     <div class="financial-background"></div>
 
     <!-- Navigation -->
@@ -514,34 +510,23 @@
         <div class="hero-content glass-effect-strong">
             <h1>Akash Sriram</h1>
             <p class="subtitle">Technology Reporter | Reuters</p>
-            <p class="tagline">US tech companies reporter with a penchant for data</p>
-            
-            <div class="stats-grid">
-                <div class="stat-card glass-effect">
-                    <span class="stat-number">430+</span>
-                    <span class="stat-label">Reuters Bylines</span>
-                </div>
-                <div class="stat-card glass-effect">
-                    <span class="stat-number">4</span>
-                    <span class="stat-label">Years at Reuters</span>
-                </div>
-                <div class="stat-card glass-effect">
-                    <span class="stat-number">8,000+</span>
-                    <span class="stat-label">Stories & Buzzes</span>
-                </div>
-            </div>
+            <p class="tagline">Breaking news reporter with a penchant for data analysis</p>
 
             <div class="contact-links">
-                <a href="mailto:akash.sriram@thomsonreuters.com" class="contact-btn glass-effect">Email</a>
-                <a href="tel:+919901777617" class="contact-btn glass-effect">Phone</a>
-                <a href="https://www.linkedin.com/in/akashsriram/" class="contact-btn glass-effect" target="_blank">LinkedIn</a>
-                <a href="https://github.com/iamjohnwatson" class="contact-btn glass-effect" target="_blank">GitHub</a>
-                <a href="https://www.reuters.com/authors/akash-sriram/" class="contact-btn glass-effect" target="_blank">Reuters Profile</a>
+                <a href="mailto:akash.sriram@thomsonreuters.com" class="contact-btn glass-effect">✉️ Email</a>
+                <a href="tel:+919901777617" class="contact-btn glass-effect">📞 Phone</a>
+                <a href="https://www.linkedin.com/in/akashsriram/" class="contact-btn glass-effect" target="_blank">
+                    <img src="in.png" alt="LinkedIn" class="icon" style="height:1em;vertical-align:middle;"> LinkedIn
+                </a>
+                <a href="https://github.com/iamjohnwatson" class="contact-btn glass-effect" target="_blank">
+                    <img src="gh.png" alt="GitHub" class="icon" style="height:1em;vertical-align:middle;"> GitHub
+                </a>
+                <a href="https://www.reuters.com/authors/akash-sriram/" class="contact-btn glass-effect" target="_blank">🔗 Reuters Profile</a>
             </div>
 
             <div class="download-section">
-                <a href="Akash Sriram-markets.pdf" download class="download-btn glass-effect">📄 Download CV</a>
-                <a href="EMEA markets breaking news reporter.pdf" download class="download-btn glass-effect">📋 Download Cover Letter</a>
+                <a href="Akash Sriram-markets.pdf" download class="download-btn glass-effect">📄 Download CV in PDF format</a>
+                <a href="EMEA markets breaking news reporter.pdf" download class="download-btn glass-effect">📋 Download Markets Breaking News Cover Letter in PDF format</a>
             </div>
         </div>
     </section>
@@ -571,25 +556,25 @@
             <div class="experience-grid">
                 <div class="experience-item glass-effect-strong">
                     <div class="experience-title">Sector Specialist, US Tech, Media and Telecom</div>
-                    <div class="experience-company">Reuters | 2021 - Present</div>
+                    <div class="experience-company">Reuters | May 2023 - Present</div>
                     <div class="experience-description">
-                        Lead coverage of Big Tech, EVs, and space companies. Produce data-driven enterprise stories and manage team story files while mentoring junior reporters. Led coverage on 8 out of 11 Red Alert stories from Bangalore bureau's US technology team.
+                        Lead coverage of Big Tech, EVs, and space companies. Produce data-driven enterprise stories and manage team's breaking news file while mentoring junior reporters. Led coverage on 8 out of 11 Red Alert stories in H1 2025 from Bangalore bureau's US technology team.
                     </div>
                 </div>
                 
                 <div class="experience-item glass-effect-strong">
                     <div class="experience-title">Tech, Media and Telecom correspondent</div>
-                    <div class="experience-company">Reuters | 2020 - 2021</div>
+                    <div class="experience-company">Reuters | Sept 2021 - April 2023</div>
                     <div class="experience-description">
                         Specialized in US technology and telecom companies with focus on EV and space coverage. Delivered rapid real-time reporting on earnings and market movements, consistently beating competition on breaking news.
                     </div>
                 </div>
                 
                 <div class="experience-item glass-effect-strong">
-                    <div class="experience-title">Digital Editor & Correspondent</div>
-                    <div class="experience-company">Deccan Herald | 2018 - 2020</div>
+                    <div class="experience-title">Digital Editor</div>
+                    <div class="experience-company">Deccan Herald | Nov 2019 - Aug 2021</div>
                     <div class="experience-description">
-                        Led digital coverage for 2020 US election, edited wire copy, and managed sub-editors. Founded the organization's podcasting division and developed multimedia storytelling capabilities.
+                        Led digital coverage for 2020 US election, edited wire copy, rewrote stories for reporters and managed sub-editors. Founded the organization's podcasting division, developed data visualization and multimedia storytelling capabilities.
                     </div>
                 </div>
             </div>
